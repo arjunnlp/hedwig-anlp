@@ -101,4 +101,17 @@ venv.bak/
 /site
 
 # mypy
-.mypy_cache/
+a.mypy_cache/
+
+#other
+*.tsv
+*.csv
+*.pkl
+*.npy
+*.pth
+*.pt
+*.tar.gz
+*.gz
+*.bin
+*.txt
+glove-*

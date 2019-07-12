@@ -11,7 +11,13 @@ Hedwig is a collection of PyTorch deep learning models implemented by the Data S
 - Char-CNN: Character-level Convolutional Network (Zhang et al., NIPS 2015)
 - Kim CNN: CNNs for sentence classification (Kim, EMNLP 2014)
 
-Each model directory has a README.md with further details.
+Each model directory has a README.md with further details. All follow similar training pattern (differences are explained in their specific README.md files. Example: to train XML-CNN on our MBTI datasets, you may want to do something like:
+
+```
+python -m models.xml_cnn --mode non-static --dataset MBTI --batch-size 1024 --lr 0.01 --epochs 30 --dropout 0.5 --dynamic-pool-length 8 --seed 3435
+```
+
+These are of course sub-obtimal hyperparameters, just an example. Each model has a file called `args.py` that you can look into to see what parameters it takes, in addition to standard ones like learning rate and batch size. 
 
 #### Setting up PyTorch
 Hedwig is designed for Python 3.6 and PyTorch 0.4. PyTorch recommends Anaconda for managing your environment. We'd recommend creating a custom environment as follows:
