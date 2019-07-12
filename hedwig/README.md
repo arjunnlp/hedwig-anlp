@@ -31,7 +31,13 @@ Corresponding authors: Dainis Boumber, dainis.boumber@gmail.com
 + [Char-CNN](models/char_cnn/): Character-level Convolutional Network [(Zhang et al., NIPS 2015)](http://papers.nips.cc/paper/5782-character-level-convolutional-networks-for-text-classification.pdf)
 + [Kim CNN](models/kim_cnn/): CNNs for sentence classification [(Kim, EMNLP 2014)](http://www.aclweb.org/anthology/D14-1181)
 
-Each model directory has a `README.md` with further details.
+Training is simple. For example, if you are using XML-CNN on MBTI dataset you would do something similar to this (these are of course not optimal hypermarameters):
+
+```
+python -m models.xml_cnn --mode non-static --dataset MBTI --batch-size 1024 --lr 0.01 --epochs 30 --dropout 0.5 --dynamic-pool-length 8 --seed 3435
+```
+
+Each model may have additional command line arguments you can use -- in this example I am only showing a few, for XML-CNN, for example, there is around two dozen things you can tune. Each model directory has a `README.md` with further details.
 
 #### Setting up PyTorch
 
