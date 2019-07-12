@@ -51,6 +51,14 @@ Code depends on data from NLTK (e.g., stopwords) so you'll have to download them
 #### Datasets
 `hedwig-data` folder, complete with default embeddings and glove-twitter-200 embeddings, default datasets and additional one called MBTI (for Marjan's paper, setup in Hedwig format and ready for use) can be found on backblaze account I setup a while ago -- search e-mail for logon credentials or ask me. Ideally you want to store stuff there, since it takes seconds to upload/dowbload 20-30GB csv, whereas Google Drive sometimes has issues with that. Plus, it's free 10 TB storage.
 
+I had already setup access for big-box-1 and will follow up with the server and the other box. Use it like so:
+
+```
+$ b2
+```
+
+That will produce a list of commands and explanations. Most of hedwig-related stuff is in the bucket called "marjan"
+
 Otherwise, do the following:
 You may Download the Reuters, AAPD and IMDB datasets, along with word2vec embeddings from hedwig-data.
 
