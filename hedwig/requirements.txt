@@ -1,0 +1,10 @@
+nltk==3.2.5
+numpy==1.14.0
+Cython==0.28.2
+scikit-learn==0.19.1
+scipy==1.0.0
+torchtext==0.2.3
+gensim==3.8.0
+ftfy>=5.5.1
+swifter>=0.289
+pandas>=24.1
