@@ -1,6 +1,3 @@
-[submodule "hedwig"]
-	path = hedwig
-	url = https://github.com/dainis-boumber/hedwig.git
 [submodule "hedwig-data"]
 	path = hedwig-data
 	url = https://git.uwaterloo.ca/jimmylin/hedwig-data.git
