@@ -41,7 +41,10 @@ Code depends on data from NLTK (e.g., stopwords) so you'll have to download them
 ```
 
 #### Datasets
-Download the Reuters, AAPD and IMDB datasets, along with word2vec embeddings from hedwig-data.
+`hedwig-data` folder, complete with default embeddings and glove-twitter-200 embeddings, default datasets and additional one called MBTI (for Marjan's paper, setup in Hedwig format and ready for use) can be found on backblaze account I setup a while ago -- search e-mail for logon credentials or ask me. Ideally you want to store stuff there, since it takes seconds to upload/dowbload 20-30GB csv, whereas Google Drive sometimes has issues with that. Plus, it's free 10 TB storage.
+
+Otherwise, do the following:
+You may Download the Reuters, AAPD and IMDB datasets, along with word2vec embeddings from hedwig-data.
 
 ```
 $ git clone https://git.uwaterloo.ca/jimmylin/hedwig-data.git
