@@ -2,6 +2,8 @@
 Deep text/document classification for binary/multiclass/multilabel, single-sequence tasks. Forked from Hedwig. 
 Hedwig is a collection of PyTorch deep learning models implemented by the Data Systems Group at the University of Waterloo.
 
+*Note: additional documentation is present throughout the library, in both `hedwig` and and `hedwig-data` directories, in the form of README.md files.*
+
 #### Models
 - HBERT: Hierarchical BERT for finetuning on Document Classification tasks.
 - DocBERT : BERT for Document Classification (Adhikari et al., 2019)
