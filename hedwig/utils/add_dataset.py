@@ -40,6 +40,8 @@ def tweet_preprocessing(text):
     def re_sub(pattern, repl):
         return re.sub(pattern, repl, text, flags=FLAGS)
 
+    text = text.replace("@ HASHTAG ", "#")
+    text = text.replace("@ USER ", "<user> ")
     text = re_sub(r"https?:\/\/\S+\b|www\.(\w+\.)+\S*", "<url>")
     text = re_sub(r"@\w+", "<user>")
     text = re_sub(r"{}{}[)dD]+|[)dD]+{}{}".format(eyes, nose, nose, eyes), "<smile>")
@@ -52,8 +54,9 @@ def tweet_preprocessing(text):
     text = re_sub(r"#\S+", hashtag)
     text = re_sub(r"([!?.]){2,}", r"\1 <repeat>")
     text = re_sub(r"\b(\S*?)(.)\2{2,}\b", r"\1\2 <elong>")
+    text = text.replace("URL", "<url>")
     text = re_sub(r"([A-Z]){2,}", allcaps)
-
+    
     return text.lower()
                  
 def is_whitespace(char):
@@ -180,7 +183,7 @@ def soft_preprocess(df):
     df.iloc[:,1]=df.iloc[:,1].swifter.apply(fix_contractions)
     return df
 
-def df_to_hedwig_tsv(df, dsname, outfilename, num_labels_in_col, preprocess, is_twiter_process=True,
+def df_to_hedwig_tsv(df, dsname, outfilename, num_labels_in_col, preprocess, is_twitter_process=True,
                      label_cols=[0], text_col=1):
     def to_tsv(outfpath, labels, texts):
         with open(outfpath, 'w', newline='') as tsvfile:
@@ -204,7 +207,6 @@ def df_to_hedwig_tsv(df, dsname, outfilename, num_labels_in_col, preprocess, is_
     df = df.sample(frac=1.0)
     to_tsv(outfpath, df.iloc[:,0].tolist(), df.iloc[:,1].tolist())
     return df
-
 
 def main(args):
     df = pd.read_csv(PATH_TO_DATASETS/args.dataset_name/args.dev)

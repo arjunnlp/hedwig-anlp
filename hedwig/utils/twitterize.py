@@ -26,6 +26,8 @@ def tweet_preprocessing(text):
     def re_sub(pattern, repl):
         return re.sub(pattern, repl, text, flags=FLAGS)
 
+    text = text.replace("@ HASHTAG ", "#")
+    text = text.replace("@ USER ", "<user> ")
     text = re_sub(r"https?:\/\/\S+\b|www\.(\w+\.)+\S*", "<url>")
     text = re_sub(r"@\w+", "<user>")
     text = re_sub(r"{}{}[)dD]+|[)dD]+{}{}".format(eyes, nose, nose, eyes), "<smile>")
@@ -38,6 +40,7 @@ def tweet_preprocessing(text):
     text = re_sub(r"#\S+", hashtag)
     text = re_sub(r"([!?.]){2,}", r"\1 <repeat>")
     text = re_sub(r"\b(\S*?)(.)\2{2,}\b", r"\1\2 <elong>")
+    text = text.replace("URL", "<url>")
     text = re_sub(r"([A-Z]){2,}", allcaps)
-
+    
     return text.lower()
