@@ -1,25 +1,11 @@
-## HedwigANLP
+## Hedwig
 
 This repo is a fork of Hedwig, a library containing PyTorch deep learning models for document classification.
 The original was implemented by the Data Systems Group at the University of Waterloo [git source](https://github.com/castorini/hedwig.git)
 This fork adds a few models and datasets. It was developed as part of research with Arjun Mukherjee's group.
 Corresponding authors: Dainis Boumber, dainis.boumber@gmail.com
 
-#### Additions in this fork:
-
-+ MBTI Dataset and all the necessary modules
-+ utility to preprocess and add new datasets saved from regular Pandas dataframe
-+ a few bug fixes
-
-#### Coming Soon
-
-+ Support for PyTorch 1.0/1.1
-+ Support for Python 3.7
-+ Support for mixed precision training for all models
-+ Distributed training for models that need it
-+ Dedicated embeddings module
-+ More automation to dataset addition process
-+ Several SOTA and baselines classifiers
+*More comprehensive documentation is located in the parent directory*
 
 #### Models
 
@@ -39,73 +25,9 @@ python -m models.xml_cnn --mode non-static --dataset MBTI --batch-size 1024 --lr
 
 Each model may have additional command line arguments you can use -- in this example I am only showing a few, for XML-CNN, for example, there is around two dozen things you can tune. Each model directory has a `README.md` with further details.
 
-#### Setting up PyTorch
+#### Preprocessing MBTI and new datasets
 
-Hedwig was designed for Python 3.6 and [PyTorch](https://pytorch.org/) 0.4. 
-
-PyTorch recommends [Anaconda](https://www.anaconda.com/distribution/) for managing your environment.
-We'd recommend creating a custom environment as follows:
-
-```
-$ conda create --name castor python=3.6
-$ source activate castor
-```
-
-And installing PyTorch as follows:
-
-```
-$ conda install pytorch=0.4.1 cuda92 -c pytorch
-```
-
-Other Python packages we use can be installed via pip:
-
-```
-$ pip install -r requirements.txt
-```
-
-Code depends on data from NLTK (e.g., stopwords) so you'll have to download them.
-Run the Python interpreter and type the commands:
-
-```python
->>> import nltk
->>> nltk.download()
-```
-
-#### Datasets
-
-Download the Reuters, AAPD and IMDB datasets, along with word2vec embeddings from
-[`hedwig-data`](https://git.uwaterloo.ca/jimmylin/hedwig-data).
-
-```bash
-$ git clone https://github.com/castorini/hedwig.git
-$ git clone https://git.uwaterloo.ca/jimmylin/hedwig-data.git
-```
-
-Organize your directory structure as follows:
-
-```
-.
-├── hedwig
-└── hedwig-data
-```
-
-After cloning the hedwig-data repo, you need to unzip the embeddings and run the preprocessing script:
-
-```bash
-cd hedwig-data/embeddings/word2vec
-gzip -d GoogleNews-vectors-negative300.bin.gz
-python bin2txt.py GoogleNews-vectors-negative300.bin GoogleNews-vectors-negative300.txt
-```
-
-#### Adding new datasets
-
-Add a directory named after dataset name in hedwig-data/datasets/
-Within it, you will have 3 files: train.tsv, test.tsv, and dev.tsv.
-Use add_dataset.ipynb notebook, found in the utils/ directory, to pre-process your Pandas dataframe into tsv file that can be used by Hedwig.
-Add the code necessary to load, process, train and evaluate on your new dataset. Small modifications may be necessary to roughly 25% of the library, but they are really simple to do. See how MBTI was added for an example, and copy-paste (while changing relevant things like number of labels, classes, etc.)
-Your preprocessing should take into account the word embeddings used (by default most things not BERT are taking in word2vec, which has very specific preprocessing rules).
-
-#### Using different embeddings
-
-Likewise, you can add different embeddings in the same manner to `hedwig-data/embeddings`. Just don't forget to tell the model what to use in command line args
-
+This is of course task-dependent, for examples see other datasets in `hedwig-data`, `datasets/` directory, and `utils` directory, namely `utils/add_dataset.ipynb`, `utils/add_dataset.py`, `utils/twitterize.py`.
+You want to have the data in TSV format.
+**Make sure that your data does not contain " anywhere, as well as escape characters or invalid unicode, that the label column is separated from text by a tab, that neither label nor text is surrounded by quotation marks, and that there is only one \n -- at the end of each line**
+See `utils/add_dataset.ipynb` for how to do it if you encounter issues. 

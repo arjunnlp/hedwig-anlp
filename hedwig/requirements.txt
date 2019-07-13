@@ -8,3 +8,4 @@ gensim==3.8.0
 ftfy>=5.5.1
 swifter>=0.289
 pandas>=0.24.1
+regex==2.4.136
