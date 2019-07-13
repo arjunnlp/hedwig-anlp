@@ -116,11 +116,17 @@ python bin2txt.py GoogleNews-vectors-negative300.bin GoogleNews-vectors-negative
 
 #### Adding new datasets
 
-Add a directory named after dataset name in hedwig-data/datasets/
-Within it, you will have 3 files: train.tsv, test.tsv, and dev.tsv.
-Use add_dataset.ipynb notebook, found in the utils/ directory, to pre-process your Pandas dataframe into tsv file that can be used by Hedwig.
-Add the code necessary to load, process, train and evaluate on your new dataset. Small modifications may be necessary to roughly 25% of the library, but they are really simple to do. See how MBTI was added for an example, and copy-paste (while changing relevant things like number of labels, classes, etc.)
-Your preprocessing should take into account the word embeddings used (by default most things not BERT are taking in word2vec, which has very specific preprocessing rules).
++ Add a directory named after dataset name in `hedwig-data/datasets/` Within it, you want to have 3 files: train.tsv, test.tsv, and dev.tsv.
++ Use `add_dataset.ipynb` notebook, found in the `hedwig/utils/` directory, to pre-process your Pandas dataframe into tsv file that can be used by Hedwig.
++ Preprocessing is of course task-dependent, for examples see other datasets in `hedwig-data`, `datasets/` directory, and `utils` directory, namely `utils/add_dataset.ipynb`, `utils/add_dataset.py`, `utils/twitterize.py`.
++ Add the code necessary to load, process, train and evaluate on your new dataset throughout the library. Small modifications may be necessary to roughly 25% of the library, but they are really simple to do. See how MBTI was added for an example, and copy-paste (while changing relevant things like number of labels, classes, etc.). You will want to add things, specifically, to `datsets`, each of the model's `__main__.py` and `args.py` files, and a few other places.
+
+**You want to have the data in TSV format. Make sure that your data does not contain " anywhere, as well as escape characters or invalid unicode, that the label column is separated from text by a tab, that neither label nor text is surrounded by quotation marks, and that there is only one \n -- at the end of each line**
+
+See `utils/add_dataset.ipynb` for how to do it if you encounter issues.
+Your preprocessing should, ideally, take into account the word embeddings used (by default most things not BERT are taking in word2vec, which has very specific preprocessing rules).
+
+If you want to add, change or remove metrics, see `hedwig/common/` directory.
 
 #### Using different embeddings
 
