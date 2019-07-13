@@ -140,8 +140,9 @@ python -m models.xml_cnn --mode non-static  --dataset MBTI --batch-size 1024 --l
 #### Recent additions:
 
 + MBTI Dataset and all the necessary modules
-+ utility to preprocess and add new datasets saved from regular Pandas dataframe
-+ a few bug fixes
++ Utilities to preprocess and add new datasets saved from regular Pandas dataframe
++ Tokenizer and preprocessor that follows protocols used by StanfordNLP when making glove-twitter-200
++ Many bug fixes
 
 #### TODO
 
