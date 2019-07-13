@@ -83,7 +83,8 @@ if __name__ == '__main__':
         'Reuters': Reuters,
         'AAPD': AAPD,
         'IMDB': IMDB,
-        'Yelp2014': Yelp2014
+        'Yelp2014': Yelp2014,
+        'MBTI': MBTI
     }
 
     if args.dataset not in dataset_map:
