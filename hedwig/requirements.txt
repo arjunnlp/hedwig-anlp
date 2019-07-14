@@ -8,4 +8,8 @@ gensim==3.8.0
 ftfy>=5.5.1
 swifter>=0.289
 pandas>=0.24.1
-regex==2.4.136
+regex==2019.6.8
+tqdm>=4.29.1
+nvidia-ml-py3>=7.352.0
+textacy>=0.7.1
+spacy>=2.1.4
