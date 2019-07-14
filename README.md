@@ -54,6 +54,7 @@ $ python
 + [HAN](hedwig/models/han/): Hierarchical Attention Networks [(Zichao et al., NAACL 2016)](https://www.cs.cmu.edu/~hovy/papers/16HLT-hierarchical-attention-networks.pdf)
 + [Char-CNN](hedwig/models/char_cnn/): Character-level Convolutional Network [(Zhang et al., NIPS 2015)](http://papers.nips.cc/paper/5782-character-level-convolutional-networks-for-text-classification.pdf)
 + [Kim CNN](hedwig/models/kim_cnn/): CNNs for sentence classification [(Kim, EMNLP 2014)](http://www.aclweb.org/anthology/D14-1181)
++ [NBSVM](hedwig/models/nbsvm/): Two complimentary implementations of NBSVM, shown to be the strongest linear baseline all-around. [(S. Wang and C. Manning)](https://github.com/sidaw/nbsvm/blob/master/wang12simple.pdf)
 
 Each model directory has a `README.md` with further details. All follow similar training pattern (differences are explained in their specific `README.md` files.
 Training is simple. For example, if you are using XML-CNN on MBTI dataset you would do something similar to this (these are of course not optimal hypermarameters):
