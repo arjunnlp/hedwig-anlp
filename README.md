@@ -98,7 +98,7 @@ Will get the hedwig-data directory.
 $ b2 download-file-by-name marjan twitter.tar.gz
 ```
 
-Will get you the MBTI data which has been "twitterized", e.g. preprocessed in the same manner Stanford NLP team did glove-twitter-* data.
+Will get you the MBTI data which has been "twitterized", e.g. preprocessed in the same manner Stanford NLP team did glove-twitter-200 data.
 
 Alternative to the above approach is to download the Reuters, AAPD and IMDB datasets, along with word2vec embeddings from hedwig-data fomr github of University of Waterloo:
 
@@ -115,6 +115,8 @@ python bin2txt.py GoogleNews-vectors-negative300.bin GoogleNews-vectors-negative
 ```
 
 #### Adding new datasets
+
+Summary: your dataset must comnform to spcifications defined by `torchtext.data` and `torchtext.datasets` - see [torchtext documentation](https://torchtext.readthedocs.io/en/latest/) for a detailed guide.
 
 + Add a directory named after dataset name in `hedwig-data/datasets/` Within it, you want to have 3 files: train.tsv, test.tsv, and dev.tsv.
 + Use `add_dataset.ipynb` notebook, found in the `hedwig/utils/` directory, to pre-process your Pandas dataframe into tsv file that can be used by Hedwig.
@@ -146,6 +148,7 @@ python -m models.xml_cnn --mode non-static  --dataset MBTI --batch-size 1024 --l
 
 #### TODO
 
++ Integrate preprocessing from totchtext and phase out use of alternatives when possible
 + Support for PyTorch 1.0/1.1
 + Support for Python 3.7
 + Support for mixed precision training for all models
