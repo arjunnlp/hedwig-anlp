@@ -18,7 +18,7 @@ def clean_string(string):
 
 
 def split_sents(string):
-    string = re.sub(r"[!?]",".", string)
+    string = re.sub(r"[!?]"," ", string)
     return string.strip().split('.')
 
 
@@ -97,7 +97,7 @@ class MBTICharQuantized(MBTI):
         :return:
         """
         train, val, test = cls.splits(path)
-        return BucketIterator.splits((train, val, test), batch_size=batch_size, repeat=False, shuffle=shuffle, device=device)
+        return BucketIterator.splits((train, val, test), batch_size=64, repeat=False, shuffle=shuffle, device=device)
 
 
 class MBTIHierarchical(MBTI):
