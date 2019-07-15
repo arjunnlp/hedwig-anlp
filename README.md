@@ -1,16 +1,55 @@
-## HedwigANLP
+## Kraken
 
-This repo is based on a fork of Hedwig and Hedwig-Data, a library containing PyTorch deep learning models for document classification and various datasets
-It also contains a number of other classifiers developed and datasets or implemented by the corresponding authors and other lab members, as well as
-modifications, extensions and bug fixes of existing code. The algorithms within are most suitable for binary/multiclass/multilabel, longer text,
-single-sequence classification tasks.
-
-The original Hedwig was implemented by the Data Systems Group at the University of Waterloo [git source](https://github.com/castorini/hedwig.git)
-HedwigANLP is being developed as part of research with Arjun Mukherjee's group.
-
-Corresponding authors (feature requests, bug reports): Dainis Boumber, dainis.boumber@gmail.com
+Corresponding authors (feature requests, bug reports): Dainis Boumber, dainis.boumber@aon.com
 
 *Note: additional documentation is present throughout the library, in both `hedwig` and and `hedwig-data` directories, in the form of README.md files.*
+
+**This library consists of 5 big parts:**
+- Hedwig, a deep text multi-label classification library extended by us
+- Pytorch-hub, BERT, GPT, GPT-2 and TransformerXL as implemented in PyTorch-hub, plus many others
+- TextZoo with 20 or so models that can be considered classics
+- XLNet - defeater of BertTokenizer
+- FastAI - the tool that started it all
+- Cybertron - monstrous distributed model, TransormerXL and XLNet had a baby?
+
+Full list:
+
+```
+FastText
+NBSVM
+
+KimCNN
+MultiLayerCNN
+MultiPerspectiveCNN
+InceptionCNN
+BILSTM
+CharCNN
+HAN
+StackLSTM
+LSTM with Attention (Self Attention / Quantum Attention)
+RCNN
+C-LSTM
+ConS2S
+Capsule
+QuantumNN
+TextCNN
+Reg-BiLSTM
+
+QRNN
+XML-CNN
+GPT Transformer
+ULMFit
+BERT
+FastBERT
+DocBERT
+Hierarchical BERT
+
+Transformer-XL
+XLNet
+GPT-2
+
+Cybertron
+```
 
 #### Setup
 
