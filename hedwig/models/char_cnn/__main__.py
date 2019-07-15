@@ -122,8 +122,8 @@ if __name__ == '__main__':
         save_path = os.path.join(args.save_path, dataset_map[args.dataset].NAME)
         os.makedirs(save_path, exist_ok=True)
 
-    parameter = filter(lambda p: p.requires_grad, model.parameters())
-    optimizer = torch.optim.Adam(parameter, lr=args.lr, weight_decay=args.weight_decay)
+    parameters = filter(lambda p: p.requires_grad, model.parameters())
+    optimizer = torch.optim.SGD(parameters, lr=args.lr, momentum=0.9)
 
     train_evaluator = EvaluatorFactory.get_evaluator(dataset_class, model, None, train_iter, args.batch_size, args.gpu)
     test_evaluator = EvaluatorFactory.get_evaluator(dataset_class, model, None, test_iter, args.batch_size, args.gpu)

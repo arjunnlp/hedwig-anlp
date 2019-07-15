@@ -84,7 +84,9 @@ class MBTI(TabularDataset):
 
 
 class MBTICharQuantized(MBTI):
-    ALPHABET = dict(map(lambda t: (t[1], t[0]), enumerate(list("""abcdefghijklmnopqrstuvwxyz0123456789,;.!?:'\"/\\|_@#$%^&*~`+-=<>()[]{}"""))))
+    ALPHABET = dict(map(lambda t: (t[1], t[0]), 
+                        enumerate(list("abcdefghijklmnopqrstuvwxyz0123456789-,;.!?:’’’/\|_@#$%^&*~‘+-=<>()[]{}"))))
+    
     TEXT_FIELD = Field(sequential=False, use_vocab=False, batch_first=True, preprocessing=char_quantize)
 
     @classmethod
