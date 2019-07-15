@@ -25,4 +25,4 @@ Usage:
   with almost anything within scikit-learn and expect it to behave just like any other built-in sklearn classifer would.
 """
 
-__all__ = ['NBSVC', 'MNBSVM']
+__all__ = ['NBSVM']

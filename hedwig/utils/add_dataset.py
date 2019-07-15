@@ -1,3 +1,10 @@
+import os
+try:
+	os.chdir(os.path.join(os.getcwd(), 'hedwig/utils'))
+	print(os.getcwd())
+except:
+	pass
+
 import pandas as pd
 import numpy as np
 from pathlib import Path
@@ -15,8 +22,10 @@ from argparse import ArgumentParser
 
 
 PATH_TO_DATASETS=Path('../../hedwig-data/datasets')
-stop_words = list(set(stopwords.words('english')))
+STOP_WORDS = list(set(stopwords.words('english')))
 FLAGS = re.MULTILINE | re.DOTALL
+ALPHABET = dict(map(lambda t: (t[1], t[0]),
+                    enumerate(list("""abcdefghijklmnopqrstuvwxyz.!,?'<>()"""))))
 
 def hashtag(text):
     text = text.group()
@@ -54,11 +63,15 @@ def tweet_preprocessing(text):
     text = re_sub(r"#\S+", hashtag)
     text = re_sub(r"([!?.]){2,}", r"\1 <repeat>")
     text = re_sub(r"\b(\S*?)(.)\2{2,}\b", r"\1\2 <elong>")
-    text = text.replace("URL", "<url>")
+    text = text.replace("@ URL", "<url>")
+    text = text.replace(" [ URL ] ", "<url>")
+    text = text.replace(" [ USER ] ", "<number>")
+    text = text.replace(" [ NUMBER ] ", "<user>")
+    text = text.replace(" [ HASHTAG ] ", "<hashtag>")
     text = re_sub(r"([A-Z]){2,}", allcaps)
-    
+
     return text.lower()
-                 
+
 def is_whitespace(char):
     """Checks whether `chars` is a whitespace character."""
     # \t, \n, and \r are technically contorl characters but we treat them
@@ -172,28 +185,33 @@ def hard_preprocess(df):
                                         "*NUMBER*", "[NUMBER]")
                                      )
     df.iloc[:,1]=df.iloc[:,1].apply(fix_contractions)
-    df.iloc[:,1] = df.iloc[:,1].swifter.apply(lambda text: " ".join(
-        [word for word in word_tokenize(text) if word not in stop_words and len(word) < 15]).strip())
     return df
+
+def char_quantize(string, max_length=1000):
+    identity = np.identity(len(ALPHABET))
+    return "".join([identity[ALPHABET[char]] for char in list(string.lower()) if char in ALPHABET]).strip()
 
 def soft_preprocess(df):
     df.iloc[:,1]=df.iloc[:,1].swifter.apply(ftfy.fix_text)
     df.iloc[:,1]=df.iloc[:,1].swifter.apply(clean_text)
-    df.iloc[:,1]=df.iloc[:,1].swifter.apply(lambda x: x.replace('"', "'").replace("\n", " "))
+    df.iloc[:,1]=df.iloc[:,1].swifter.apply(
+        lambda x: x.replace('"', "").replace("\n", " ").replace("\\","").replace("`","'"))
     df.iloc[:,1]=df.iloc[:,1].swifter.apply(fix_contractions)
     return df
 
-def df_to_hedwig_tsv(df, dsname, outfilename, num_labels_in_col, preprocess, is_twitter_process=True,
+def df_to_hedwig_tsv(df, dsname, outfilename, num_labels_in_col, preprocess, is_twitter_process=True, stop_words=[],
                      label_cols=[0], text_col=1):
     def to_tsv(outfpath, labels, texts):
         with open(outfpath, 'w', newline='') as tsvfile:
             writer = csv.writer(tsvfile, delimiter='\t')
             for label, text in zip(labels, texts):
-                writer.writerow([label, text])
+                if char_quantize(text) > 10:
+                    writer.writerow([label, text])
     df = preprocess(df)
     if is_twitter_process:
         df.iloc[:,1]=df.iloc[:,1].swifter.apply(tweet_preprocessing)
-        
+    df.iloc[:,1] = df.iloc[:,1].swifter.apply(lambda text: " ".join(
+        [word for word in text.split() if word not in stop_words and len(word) < 15]).strip())
     df.iloc[:,0] = df.swifter.apply(lambda row: ''.join([str(lbl) for lbl in row[label_cols]]), axis=1)
     df = df.iloc[:,[0, 1]]
     df.iloc[:,0]=df.iloc[:,0].astype('str')
@@ -207,6 +225,23 @@ def df_to_hedwig_tsv(df, dsname, outfilename, num_labels_in_col, preprocess, is_
     df = df.sample(frac=1.0)
     to_tsv(outfpath, df.iloc[:,0].tolist(), df.iloc[:,1].tolist())
     return df
+
+df = pd.read_csv('../../hedwig-data/datasets/MBTI/dev.csv')
+tdf=df_to_hedwig_tsv(df, dsname="MBTI", outfilename='dev.tsv', num_labels_in_col=4,
+                     preprocess=soft_preprocess, is_twitter_process=True, stop_words=STOP_WORDS)
+
+
+df = pd.read_csv('../../hedwig-data/datasets/MBTI/test.csv')
+tdf=df_to_hedwig_tsv(df, dsname="MBTI", outfilename='test.stop.tsv', num_labels_in_col=4,
+                     preprocess=soft_preprocess, is_twitter_process=True, stop_words=STOP_WORDS)
+
+
+
+df = pd.read_csv('../../hedwig-data/datasets/MBTI/train.csv')
+tdf=df_to_hedwig_tsv(df, dsname="MBTI", outfilename='train.stop.tsv', num_labels_in_col=4,
+                     preprocess=soft_preprocess, is_twitter_process=True, stop_words=STOP_WORDS)
+
+
 
 def main(args):
     df = pd.read_csv(PATH_TO_DATASETS/args.dataset_name/args.dev)
@@ -222,14 +257,8 @@ if __name__== "__main__":
     parser.add_argument("-d", "--dataset-name", dest="dataset_name",
                         help="name of the dataset being created", metavar="DATASET_NAME")
     parser.add_argument("-n", "--num-labels", dest="num_labels_in_col",
-                        help="number of labels contained in the column in case there is one label column (could be either 1 or labels could be a string stored in a column)",
-                        metavar="NUM_LABELS_IN_COL")
-    parser.add_argument("-x", "--train", dest="train",
-                        help="name of the data file to be converted to train.tsv", metavar="TRAIN")
-    parser.add_argument("-v", "--dev", dest="dev",
-                        help="name of the data file to be converted to dev.tsv", metavar="DEV")
-    parser.add_argument("-t", "--test", dest="test",
-                        help="name of the data file to be converted to test.tsv", metavar="TEST")
-
+    help="number of labels contained in the column in case there is one label column (could be either 1 or labels could be a string stored in a column" metavar="NUM_LABELS_IN_COL")
+    parser.add_argument("-x", "--train", dest="train", help="name of the data file to be converted to train.tsv", metavar="TRAIN")
+    parser.add_argument("-v", "--dev", dest="dev", help="name of the data file to be converted to dev.tsv", metavar="DEV")
+    parser.add_argument("-t", "--test", dest="test", help="name of the data file to be converted to test.tsv", metavar="TEST")
     main(parser.parse_args())
-

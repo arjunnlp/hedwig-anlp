@@ -45,6 +45,20 @@ $ python
 >>> nltk.download()
 ```
 
+Furthermore, you want to get spacy stopwords and models
+
+```
+$ spacy download en
+```
+
+Spacy stop words tend to be superior to those offered by NLTK, sklearn, or StanfordNLP,
+although it's task-specific. They are accessible like so:
+
+```
+spacy_nlp = spacy.load('en_core_web_sm')
+spacy_stopwords = spacy.lang.en.stop_words.STOP_WORDS
+```
+
 #### Models
 
 + [HBERT](hedwig/models/hbert/): Hierarchical BERT for finetuning on Document Classification tasks.
