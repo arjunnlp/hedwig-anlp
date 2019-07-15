@@ -47,3 +47,5 @@ class CharCNN(nn.Module):
         x = F.relu(self.fc2(x))
         x = self.dropout(x)
         return self.fc3(x)
+    
+

@@ -18,7 +18,7 @@ def clean_string(string):
 
 
 def split_sents(string):
-    string = re.sub(r"[!?]"," ", string)
+    string = re.sub(r"[!?]",".", string)
     return string.strip().split('.')
 
 

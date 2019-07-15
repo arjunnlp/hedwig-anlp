@@ -27,8 +27,10 @@ def char_quantize(string, max_length=1000):
     quantized_string = np.array([identity[MBTICharQuantized.ALPHABET[char]] for char in list(string.lower()) if char in MBTICharQuantized.ALPHABET], dtype=np.float32)
     if len(quantized_string) > max_length:
         return quantized_string[:max_length]
-    else:
+    elif len(quantized_string) > 0:
         return np.concatenate((quantized_string, np.zeros((max_length - len(quantized_string), len(MBTICharQuantized.ALPHABET)), dtype=np.float32)))
+    else:
+        return np.zeros((max_length, len(MBTICharQuantized.ALPHABET)), dtype=np.float32) 
 
 
 def process_labels(string):
@@ -84,7 +86,9 @@ class MBTI(TabularDataset):
 
 
 class MBTICharQuantized(MBTI):
-    ALPHABET = dict(map(lambda t: (t[1], t[0]), enumerate(list("""abcdefghijklmnopqrstuvwxyz0123456789,;.!?:'\"/\\|_@#$%^&*~`+-=<>()[]{}"""))))
+    ALPHABET = dict(map(lambda t: (t[1], t[0]), 
+                        enumerate(list("abcdefghijklmnopqrstuvwxyz0123456789-,;.!?:’’’/\|_@#$%^&*~‘+-=<>()[]{}"))))
+    
     TEXT_FIELD = Field(sequential=False, use_vocab=False, batch_first=True, preprocessing=char_quantize)
 
     @classmethod
