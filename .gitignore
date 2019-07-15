@@ -115,3 +115,12 @@ a.mypy_cache/
 *.bin
 *.txt
 glove-*
+
+*.tar.gz
+*.gz
+*.zip
+*.pkl
+*.npy
+
+*.csv
+*.tsv
