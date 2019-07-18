@@ -32,7 +32,7 @@ class BertTrainer(object):
             len(self.train_examples) / args.batch_size / args.gradient_accumulation_steps) * args.epochs
         if args.local_rank != -1:
             self.num_train_optimization_steps = args.num_train_optimization_steps // torch.distributed.get_world_size()
-        self.log_header = 'Epoch Iteration Progress   Dev/Acc.  Dev/Hamm.  Dev/Jacc.   Dev/Prec Dev/Rec Dev/micro-F1 Dev/macro-F1 Dev/AUC Dev/Loss'
+        self.log_header = 'Epoch Iteration Progress   Dev/Acc.  Dev/Hamm.  Dev/Jacc.   Dev/Prec Dev/Rec Dev/micro-F1 Dev/F1 Dev/AUCROC Dev/Loss'
         self.log_template = ' '.join('{:>5.0f},{:>9.0f},{:>6.0f}/{:<5.0f} {:>6.4f},{:>8.4f},{:8.4f},{:8.4f},{:>8.4f},{:8.4f},{:8.4f},{:8.4f},{:10.4f}'.split(','))
 
         self.iterations, self.nb_tr_steps, self.tr_loss = 0, 0, 0
@@ -111,8 +111,6 @@ class BertTrainer(object):
             self.train_epoch(train_dataloader)
             self.dev_evaluator = BertEvaluator(self.model, self.processor, self.args, split='dev')
             #dev_acc, dev_precision, dev_recall, dev_f1, dev_loss = dev_evaluator.get_scores()[0]
-            dev_acc, dev_hamming, dev_jaccard, dev_precision, dev_recall, dev_f1_micro, dev_f1_macro, dev_auc, dev_loss = self.dev_evaluator.get_scores()[0]
-
             # Print validation results
             tqdm.write(self.log_header)
             tqdm.write(self.log_template.format(epoch + 1, self.iterations, epoch + 1, self.args.epochs,
