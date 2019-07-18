@@ -109,7 +109,7 @@ class BertTrainer(object):
 
         for epoch in trange(int(self.args.epochs), desc="Epoch"):
             self.train_epoch(train_dataloader)
-            dev_evaluator = BertEvaluator(self.model, self.processor, self.args, split='dev')
+            self.dev_evaluator = BertEvaluator(self.model, self.processor, self.args, split='dev')
             #dev_acc, dev_precision, dev_recall, dev_f1, dev_loss = dev_evaluator.get_scores()[0]
             dev_acc, dev_hamming, dev_jaccard, dev_precision, dev_recall, dev_f1_micro, dev_f1_macro, dev_auc, dev_loss = self.dev_evaluator.get_scores()[0]
 

@@ -15,6 +15,7 @@ from datasets.yelp2014 import Yelp2014
 from datasets.mbti import MBTI
 from models.reg_lstm.args import get_args
 from models.reg_lstm.model import RegLSTM
+from datasets.sst import SST
 
 
 class UnknownWordVecCache(object):
@@ -81,7 +82,8 @@ if __name__ == '__main__':
         'AAPD': AAPD,
         'IMDB': IMDB,
         'Yelp2014': Yelp2014,
-        'MBTI': MBTI
+        'MBTI': MBTI,
+        'SST-2': SST
     }
 
     if args.dataset not in dataset_map:
