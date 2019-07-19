@@ -94,8 +94,6 @@ class BertEvaluator(object):
         recall = metrics.recall_score(target_labels, predicted_labels, average='micro')
         f1_micro = metrics.f1_score(target_labels, predicted_labels, average='micro')
         f1_macro = metrics.f1_score(target_labels, predicted_labels, average='binary')
-        auc_roc=metrics.roc_auc_score(target_labels, predicted_labelsa)
-        avg_loss = total_loss / len(self.data_loader.dataset.examples)
         avg_loss = total_loss / nb_eval_steps
 
         return [accuracy,
@@ -105,7 +103,6 @@ class BertEvaluator(object):
                 recall,
                 f1_micro,
                 f1_macro,
-                auc_micro,
                 avg_loss],['accuracy',
                            'hamming_loss',
                            'jaccard_score',
@@ -113,5 +110,4 @@ class BertEvaluator(object):
                            'recall_micro',
                            'f1_micro',
                            'f1_binary',
-                           'auc_score',
                            'cross_entropy_loss' ]

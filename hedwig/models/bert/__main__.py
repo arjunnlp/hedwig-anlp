@@ -22,17 +22,17 @@ from utils.optimization import BertAdam
 from utils.tokenization import BertTokenizer
 
 # String templates for logging results
-LOG_HEADER = 'Split  Dev/Acc.  Dev/Pr.  Dev/Re.   Dev/F1   Dev/Loss'
-LOG_TEMPLATE = ' '.join('{:>5s},{:>9.4f},{:>8.4f},{:8.4f},{:8.4f},{:10.4f}'.split(','))
+LOG_HEADER = 'Split  Dev/Acc.  Dev/Hamm.  Dev/Jacc.   Dev/Prec Dev/Rec Dev/micro-F1 Dev/F1  Dev/Loss'
+LOG_TEMPLATE = ' '.join('{:>5s},{:>6.4f},{:>8.4f},{:8.4f},{:8.4f},{:>8.4f},{:8.4f},{:8.4f},{:10.4f}'.split(','))
 
 
 def evaluate_split(model, processor, args, split='dev'):
     evaluator = BertEvaluator(model, processor, args, split)
     start_time = time.time()
-    accuracy, precision, recall, f1, avg_loss = evaluator.get_scores(silent=True)[0]
+    accuracy, hamming, jaccard, precision, recall, microf1, f1, avg_loss = evaluator.get_scores(silent=True)[0]
     print("Inference time", time.time() - start_time)
     print('\n' + LOG_HEADER)
-    print(LOG_TEMPLATE.format(split.upper(), accuracy, precision, recall, f1, avg_loss))
+    print(LOG_TEMPLATE.format(split.upper(), accuracy, hamming, jaccard, precision, recall, f1, microf1, f1, avg_loss))
 
 
 if __name__ == '__main__':
