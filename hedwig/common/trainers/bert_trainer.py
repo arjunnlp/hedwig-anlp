@@ -65,7 +65,7 @@ class BertTrainer(object):
             self.nb_tr_steps += 1
             if (step + 1) % self.args.gradient_accumulation_steps == 0:
                 if self.args.fp16:
-                    lr_this_step = self.args.learning_rate * warmup_linear(self.iterations / self.num_train_optimization_steps, self.args.warmup_proportion)
+                    lr_this_step = self.args.lr * warmup_linear(self.iterations / self.num_train_optimization_steps, self.args.warmup_proportion)
                     for param_group in self.optimizer.param_groups:
                         param_group['lr'] = lr_this_step
                 self.optimizer.step()

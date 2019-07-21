@@ -20,9 +20,9 @@ class ClassificationTrainer(Trainer):
         self.iters_not_improved = 0
         self.start = None
         self.log_template = ' '.join(
-            '       {:>6.0f},{:>5.0f},{:>9.0f},{:>5.0f}/{:<5.0f} {:>7.0f}%,{:>8.6f},{:12.4f}'.split(','))
+                '       {:>6.0f},{:>5.0f},{:>9.0f},{:>5.0f}/{:<5.0f} {:>7.0f}%,{:8.4f},{:12.4f}'.split(','))
         self.dev_log_template = ' '.join(
-            '       {:>6.0f},{:>5.0f},{:>9.0f},{:>5.0f}/{:<5.0f} {:>8.4f},{:>8.4f},{:8.4f},{:>8.4f},{:8.4f},{:8.4f},{:8.4f},{:8.4f},{:8.4f}'.split(','))
+            '       {:>6.0f},{:>5.0f},{:>9.0f},{:>5.0f}/{:<5.0f} {:>8.4f},{:>8.4f},{:8.4f},{:>8.4f},{:8.4f},{:8.4f},{:8.4f},{:8.4f}'.split(','))
 
         timestamp = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
         self.snapshot_path = os.path.join(self.model_outfile, self.train_loader.dataset.NAME, '%s.pt' % timestamp)
@@ -80,7 +80,7 @@ class ClassificationTrainer(Trainer):
     def train(self, epochs):
         self.start = time.time()
         header = 'Train:   Time Epoch Iteration  Progress    (%Epoch)    Loss     Accuracy'
-        dev_header = 'Dev:     Time Epoch Iteration Progress    Accuracy  Hamming  Jaccard  Precision Recall  micro-F1 macro-F1 micro-AUC  Loss'
+        dev_header = 'Dev:     Time Epoch Iteration Progress    Accuracy  Hamming  Jaccard  Precision Recall  micro-F1 macro-F1 Loss'
         os.makedirs(self.model_outfile, exist_ok=True)
         os.makedirs(os.path.join(self.model_outfile, self.train_loader.dataset.NAME), exist_ok=True)
 
@@ -95,7 +95,7 @@ class ClassificationTrainer(Trainer):
             print('\n' + dev_header)
             print(self.dev_log_template.format(time.time() - self.start, epoch, self.iterations, epoch, epochs,
                                                dev_acc, dev_hamming, dev_jaccard, dev_precision, dev_recall,
-                                               dev_f1_micro, dev_f1_macro, dev_auc, dev_loss))
+                                               dev_f1_micro, dev_f1_macro, dev_loss))
 
             # Update validation results
             if dev_f1_micro > self.best_dev_f1:

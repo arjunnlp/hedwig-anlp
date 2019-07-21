@@ -93,7 +93,7 @@ class BertEvaluator(object):
         precision = metrics.precision_score(target_labels, predicted_labels, average='micro')
         recall = metrics.recall_score(target_labels, predicted_labels, average='micro')
         f1_micro = metrics.f1_score(target_labels, predicted_labels, average='micro')
-        f1_macro = metrics.f1_score(target_labels, predicted_labels, average='binary')
+        f1_macro = metrics.f1_score(target_labels, predicted_labels, average='macro')
         avg_loss = total_loss / nb_eval_steps
 
         return [accuracy,
@@ -109,5 +109,5 @@ class BertEvaluator(object):
                            'precision_micro',
                            'recall_micro',
                            'f1_micro',
-                           'f1_binary',
+                           'f1_macro',
                            'cross_entropy_loss' ]
