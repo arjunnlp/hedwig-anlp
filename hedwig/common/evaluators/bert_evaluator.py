@@ -70,8 +70,12 @@ class BertEvaluator(object):
 
             if self.args.is_multilabel:
                 predicted_labels.extend(F.sigmoid(logits).round().long().cpu().detach().numpy())
-                target_labels.extend(label_ids.cpu().detach().numpy())
-                loss = F.binary_cross_entropy_with_logits(logits, label_ids.float(), size_average=False)
+                target_labels.extend(label_ids.cpu().detach().numpy()
+
+                if self.args.fp16:
+                    loss = F.binary_cross_entropy_with_logits(logits, label_ids.half(), size_average=False)
+                else:
+                    loss = F.binary_cross_entropy_with_logits(logits, label_ids.float(), size_average=False)
             else:
                 predicted_labels.extend(torch.argmax(logits, dim=1).cpu().detach().numpy())
                 target_labels.extend(torch.argmax(label_ids, dim=1).cpu().detach().numpy())
