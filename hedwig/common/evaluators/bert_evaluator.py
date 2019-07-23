@@ -70,7 +70,7 @@ class BertEvaluator(object):
 
             if self.args.is_multilabel:
                 predicted_labels.extend(F.sigmoid(logits).round().long().cpu().detach().numpy())
-                target_labels.extend(label_ids.cpu().detach().numpy()
+                target_labels.extend(label_ids.cpu().detach().numpy())
 
                 if self.args.fp16:
                     loss = F.binary_cross_entropy_with_logits(logits, label_ids.half(), size_average=False)
@@ -103,7 +103,7 @@ class BertEvaluator(object):
         return [accuracy,
                 hamming_loss,
                 jaccard_score,
-                precision, 
+                precision,
                 recall,
                 f1_micro,
                 f1_macro,
