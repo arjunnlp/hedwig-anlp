@@ -125,3 +125,5 @@ glove-*
 
 *.csv
 *.tsv
+
+.vscode/
