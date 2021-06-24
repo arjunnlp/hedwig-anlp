@@ -16,7 +16,7 @@ Corresponding authors: Dainis Boumber, dainis.boumber@gmail.com
 + [HAN](models/han/): Hierarchical Attention Networks [(Zichao et al., NAACL 2016)](https://www.cs.cmu.edu/~hovy/papers/16HLT-hierarchical-attention-networks.pdf)
 + [Char-CNN](models/char_cnn/): Character-level Convolutional Network [(Zhang et al., NIPS 2015)](http://papers.nips.cc/paper/5782-character-level-convolutional-networks-for-text-classification.pdf)
 + [Kim CNN](models/kim_cnn/): CNNs for sentence classification [(Kim, EMNLP 2014)](http://www.aclweb.org/anthology/D14-1181)
-+ NBSVM: Naive Bayes SVM for multi-class multi-label hierarchical text classification, by Hinton. One of the strongest models in practice.
++ NBSVM: Naive Bayes SVM for multi-class multi-label hierarchical text classification, follows description by Hinton in one of his lectures. One of the strongest models in practice.
 
 Training is simple. For example, if you are using XML-CNN on MBTI dataset you would do something similar to this (these are of course not optimal hypermarameters):
 
