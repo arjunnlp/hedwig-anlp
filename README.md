@@ -1,6 +1,6 @@
 ## Kraken
 
-Corresponding authors (feature requests, bug reports): Dainis Boumber, dainis.boumber@aon.com
+Corresponding authors (feature requests, bug reports): Dainis Boumber, dainis.boumber@gmail.com
 
 *Note: additional documentation is present throughout the library, in both `hedwig` and and `hedwig-data` directories, in the form of README.md files.*
 
@@ -9,11 +9,11 @@ Corresponding authors (feature requests, bug reports): Dainis Boumber, dainis.bo
 - Pytorch-hub, BERT, GPT, GPT-2 and TransformerXL as implemented in PyTorch-hub, plus many others
 - TextZoo with 20 or so models that can be considered classics
 - XLNet - defeater of BertTokenizer
-- FastAI - the tool that started it all
+- FastAI - also known as ULMFit, AWD-LSTM and Transformer based library that along with GPT and ELMo was the first to us language modeling for pre-training. Has a lot of other trics and ideas, and gives BERT a run for its money with ease in many practical scenarios.
 - Cybertron - monstrous distributed model, TransormerXL and XLNet had a baby?
 
 Full list:
-
+,
 ```
 FastText
 NBSVM
